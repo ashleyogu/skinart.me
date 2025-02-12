@@ -195,7 +195,7 @@ const applySkins = async () => {
     return;
   }
   try {
-    const profileResponse = await fetch("https://api.minecraftservices.com/minecraft/profile", {
+    const profileResponse = await fetch("/api/minecraft/profile", {
       headers: { "Authorization": "Bearer " + bearerToken.value }
     });
     if (!profileResponse.ok) {
@@ -230,29 +230,27 @@ const applySkins = async () => {
       let attempt = 0;
       let success = false;
       while (attempt < 3 && !success) {
-        const res = await fetch("https://api.minecraftservices.com/minecraft/profile/skins", {
-          method: "POST",
-          headers: { "Authorization": "Bearer " + bearerToken.value },
-          body: formData
-        });
-        if (res.ok) {
-          success = true;
-          console.log(`${skinName} applied successfully`);
+      const res = await fetch("/api/minecraft/profile/skins", {
+        method: "POST",
+        headers: { "Authorization": "Bearer " + bearerToken.value },
+        body: formData
+      });
+      if (res.ok) {
+        success = true;
+        console.log(`${skinName} applied successfully`);
+      } else {
+        attempt++;
+        if (attempt >= 3) {
+        error.value = `Error changing skin: ${skinName}`;
+        console.error(`Error changing skin: ${skinName}`);
         } else {
-          attempt++;
-          if (attempt >= 3) {
-            error.value = `Error changing skin: ${skinName}`;
-            console.error(`Error changing skin: ${skinName}`);
-          } else {
-            await sleep(3000);
-          }
+        await sleep(3000);
         }
+      }
       }
 
       await sleep(30000);
-      if (nameMCWindow && !nameMCWindow.closed) {
-        nameMCWindow.location.reload();
-      }
+      window.open(`https://namemc.com/profile/${ign.toLowerCase()}`, '_blank');
       await sleep(15000);
     }
   } catch (err) {
