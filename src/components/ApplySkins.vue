@@ -287,7 +287,7 @@ async function clearFailedSkins() {
                 stroke-linejoin="round"
                 />
             </svg>
-            <p class="text-sm text-gray-400">Click to upload or drag & drop a ZIP</p>
+            <p class="text-sm text-gray-400">Click to upload a ZIP</p>
             <p class="text-xs text-gray-500">ZIP must have Skin-1.png, Skin-2.png, etc.</p>
           </div>
         </div>
