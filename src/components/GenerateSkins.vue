@@ -144,19 +144,19 @@ async function generateSkins() {
 </script>
 
 <template>
-  <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-2xl">
+  <div class="bg-gray-800 rounded-2xl shadow-xl p-8 w-full max-w-2xl border border-gray-700">
     <div class="text-center mb-8">
-      <h1 class="text-3xl font-bold text-gray-800 mb-4">Minecraft Skin Art Generator</h1>
+      <h1 class="text-3xl font-bold text-white mb-4">Minecraft Skin Art Generator</h1>
     </div>
     <div class="space-y-6">
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">
+        <label class="block text-sm font-medium text-gray-300 mb-2">
           Skin Art Image (72×24px)
         </label>
         <div
           class="relative border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors"
           :class="[
-            dragOver ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400',
+            dragOver ? 'border-purple-500 bg-purple-900/20' : 'border-gray-600 hover:border-gray-500',
           ]"
           @dragover="(e) => handleDragOver(e, 'art')"
           @dragleave="() => handleDragLeave('art')"
@@ -172,7 +172,7 @@ async function generateSkins() {
           />
           <div v-if="!artPreview" class="space-y-2">
             <svg
-              class="mx-auto h-12 w-12 text-gray-400"
+              class="mx-auto h-12 w-12 text-gray-500"
               stroke="currentColor"
               fill="none"
               viewBox="0 0 48 48"
@@ -184,8 +184,8 @@ async function generateSkins() {
                 stroke-linejoin="round"
               />
             </svg>
-            <div class="text-sm text-gray-600">
-              <span class="font-medium text-blue-600 hover:text-blue-500"> Click to upload </span>
+            <div class="text-sm text-gray-400">
+              <span class="font-medium text-purple-400 hover:text-purple-300">Click to upload</span>
               or drag & drop
             </div>
             <p class="text-xs text-gray-500">PNG/JPG, 72×24 px</p>
@@ -194,12 +194,12 @@ async function generateSkins() {
             <img
               :src="artPreview"
               alt="Art Preview"
-              class="mx-auto border border-gray-200 rounded"
+              class="mx-auto border border-gray-700 rounded bg-gray-900"
               style="image-rendering: pixelated"
             />
-            <p class="text-sm text-gray-600">{{ artFile?.name }}</p>
+            <p class="text-sm text-gray-400">{{ artFile?.name }}</p>
             <button
-              class="text-xs text-red-500 hover:text-red-600"
+              class="text-xs text-pink-400 hover:text-pink-300"
               @click.stop="
                 () => {
                   artFile = null
@@ -215,13 +215,13 @@ async function generateSkins() {
 
       <!-- Base Skin Upload (Optional) -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">
+        <label class="block text-sm font-medium text-gray-300 mb-2">
           Base Skin (64×64px, optional)
         </label>
         <div
           class="relative border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors"
           :class="[
-            baseDragOver ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400',
+            baseDragOver ? 'border-purple-500 bg-purple-900/20' : 'border-gray-600 hover:border-gray-500',
           ]"
           @dragover="(e) => handleDragOver(e, 'base')"
           @dragleave="() => handleDragLeave('base')"
@@ -237,7 +237,7 @@ async function generateSkins() {
           />
           <div v-if="!basePreview" class="space-y-1">
             <svg
-              class="mx-auto h-8 w-8 text-gray-400"
+              class="mx-auto h-8 w-8 text-gray-500"
               stroke="currentColor"
               fill="none"
               viewBox="0 0 48 48"
@@ -255,12 +255,12 @@ async function generateSkins() {
             <img
               :src="basePreview"
               alt="Base Skin Preview"
-              class="mx-auto border border-gray-200 rounded"
+              class="mx-auto border border-gray-700 rounded bg-gray-900"
               style="image-rendering: pixelated"
             />
-            <p class="text-sm text-gray-600">{{ baseSkinFile?.name }}</p>
+            <p class="text-sm text-gray-400">{{ baseSkinFile?.name }}</p>
             <button
-              class="text-xs text-red-500 hover:text-red-600"
+              class="text-xs text-pink-400 hover:text-pink-300"
               @click.stop="
                 () => {
                   baseSkinFile = null
@@ -276,18 +276,18 @@ async function generateSkins() {
 
       <button
         @click="generateSkins"
-        class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 px-4 rounded-lg hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all transform hover:scale-[1.02] active:scale-[0.98] font-medium"
+        class="w-full bg-purple-500 text-white py-3 px-4 rounded-lg hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all transform hover:scale-[1.02] active:scale-[0.98] font-medium"
       >
-        Generate Skins &amp; Download ZIP
+        Generate Skins & Download ZIP
       </button>
 
-      <div class="mt-6 text-sm text-gray-500">
-        <h3 class="font-medium text-gray-700 mb-2">Instructions:</h3>
+      <div class="mt-6 text-sm text-gray-400">
+        <h3 class="font-medium text-gray-300 mb-2">Instructions:</h3>
         <ol class="list-decimal list-inside space-y-1">
           <li>Upload a 72×24 skin art image.</li>
           <li>Optionally upload a 64×64 base skin. (Default black used if omitted)</li>
-          <li>Click “Generate Skins” to download a zip of 27 Skin-X files.</li>
-          <li>Then switch over to the “Apply Skins” tab.</li>
+          <li>Click "Generate Skins" to download a zip of 27 Skin-X files.</li>
+          <li>Then switch over to the "Apply Skins" tab.</li>
         </ol>
       </div>
     </div>

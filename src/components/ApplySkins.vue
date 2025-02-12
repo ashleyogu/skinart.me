@@ -243,10 +243,10 @@ async function clearFailedSkins() {
 </script>
 
 <template>
-  <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-2xl">
+  <div class="bg-gray-800 rounded-2xl shadow-xl p-8 w-full max-w-2xl border border-gray-700">
     <div class="text-center mb-8">
-      <h1 class="text-3xl font-bold text-gray-800 mb-4">Minecraft Skin Auto-Apply</h1>
-      <p class="text-sm text-gray-600">
+      <h1 class="text-3xl font-bold text-white mb-4">Minecraft Skin Auto-Apply</h1>
+      <p class="text-sm text-gray-400">
         Enter your Bearer token manually. The script cycles through each skin, waits between
         uploads, and auto‐refreshes your NameMC page to confirm changes.
       </p>
@@ -255,9 +255,9 @@ async function clearFailedSkins() {
     <div class="space-y-6">
       <!-- ZIP File Upload -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2"> ZIP File of Skins </label>
+        <label class="block text-sm font-medium text-gray-300 mb-2">ZIP File of Skins</label>
         <div
-          class="relative border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors"
+          class="relative border-2 border-dashed border-gray-600 hover:border-gray-500 rounded-lg p-8 text-center cursor-pointer transition-colors"
           @click="$refs.zipInput.click()"
         >
           <input
@@ -269,19 +269,25 @@ async function clearFailedSkins() {
           />
           <div class="space-y-2">
             <svg
-              class="mx-auto h-12 w-12 text-gray-400"
+              class="mx-auto h-12 w-12 text-gray-500"
               stroke="currentColor"
               fill="none"
               viewBox="0 0 48 48"
             >
-              <path
-                d="M8 12h32M8 24h32M8 36h32"
+                <path
+                d="M44 24V9a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v30a3 3 0 0 0 3 3h34a3 3 0 0 0 3-3V24zM7 6h34M15 6v36M23 6v36"
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-              />
+                />
+                <path
+                d="M15 14h8v4h-8v-4zm0 8h8v4h-8v-4zm0 8h8v4h-8v-4z"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                />
             </svg>
-            <p class="text-sm text-gray-600">Click to upload or drag & drop a ZIP</p>
+            <p class="text-sm text-gray-400">Click to upload or drag & drop a ZIP</p>
             <p class="text-xs text-gray-500">ZIP must have Skin-1.png, Skin-2.png, etc.</p>
           </div>
         </div>
@@ -289,21 +295,21 @@ async function clearFailedSkins() {
 
       <!-- Bearer Token -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2"> Bearer Token </label>
+        <label class="block text-sm font-medium text-gray-300 mb-2">Bearer Token<a href="https://bearer.wiki/#obtain" target="_blank" class="text-xs text-gray-500 mb-2 block">(What is a Bearer token? & How to get it?)</a></label>
         <input
           type="text"
           v-model="bearerToken"
           placeholder="Paste Bearer token"
-          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="w-full bg-gray-700 border border-gray-600 text-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-400"
         />
       </div>
 
       <!-- Skin Style -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2"> Skin Style </label>
+        <label class="block text-sm font-medium text-gray-300 mb-2">Skin Style</label>
         <select
           v-model="skinStyle"
-          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="w-full bg-gray-700 border border-gray-600 text-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
         >
           <option value="slim">Slim</option>
           <option value="classic">Classic</option>
@@ -314,13 +320,13 @@ async function clearFailedSkins() {
       <div class="flex gap-4">
         <button
           @click="applySkins"
-          class="flex-1 bg-gradient-to-r from-green-600 to-teal-600 text-white py-3 px-4 rounded-lg hover:from-green-700 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all transform hover:scale-[1.02] active:scale-[0.98] font-medium"
+          class="flex-1 bg-purple-500 text-white py-3 px-4 rounded-lg hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all transform hover:scale-[1.02] active:scale-[0.98] font-medium"
         >
           Apply Skins
         </button>
         <button
           @click="clearFailedSkins"
-          class="flex-1 bg-gradient-to-r from-red-600 to-pink-600 text-white py-3 px-4 rounded-lg hover:from-red-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all transform hover:scale-[1.02] active:scale-[0.98] font-medium"
+          class="flex-1 bg-red-500 text-white py-3 px-4 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all transform hover:scale-[1.02] active:scale-[0.98] font-medium"
         >
           Clear Failed Skins
         </button>
@@ -328,20 +334,20 @@ async function clearFailedSkins() {
 
       <!-- Progress Bar -->
       <div v-if="totalSkinsCount" class="mt-4">
-        <p class="text-sm text-gray-600 mb-1">
+        <p class="text-sm text-gray-400 mb-1">
           Upload progress: {{ uploadedCount }}/{{ totalSkinsCount }}
         </p>
-        <div class="w-full bg-gray-200 h-4 rounded-full">
+        <div class="w-full bg-gray-700 h-4 rounded-full">
           <div
-            class="bg-green-500 h-4 rounded-full transition-all"
+            class="bg-gradient-to-r from-purple-500 to-pink-500 h-4 rounded-full transition-all"
             :style="{ width: (uploadedCount / totalSkinsCount) * 100 + '%' }"
           ></div>
         </div>
       </div>
 
       <div v-if="headPreviews.length" class="mt-6">
-        <h3 class="font-medium text-gray-700 mb-2 text-sm">Uploaded Heads</h3>
-        <div class="flex flex-wrap w-[288px]">
+        <h3 class="font-medium text-gray-300 mb-2 text-sm">Uploaded Heads</h3>
+        <div class="flex flex-wrap w-[288px] bg-gray-900/50 p-2 rounded-lg">
           <div
             v-for="(head, index) in [...headPreviews].reverse()"
             :key="index"
@@ -357,17 +363,17 @@ async function clearFailedSkins() {
         </div>
       </div>
 
-      <div class="mt-6 text-sm text-gray-500">
-        <h3 class="font-medium text-gray-700 mb-2">Instructions:</h3>
+      <div class="mt-6 text-sm text-gray-400">
+        <h3 class="font-medium text-gray-300 mb-2">Instructions:</h3>
         <ol class="list-decimal list-inside space-y-1">
           <li>Pick the ZIP you generated on the left tab.</li>
           <li>Enter your Bearer token from your Minecraft session.</li>
-          <li>Choose Slim or Classic, then click “Apply Skins.”</li>
+          <li>Choose Slim or Classic, then click "Apply Skins."</li>
           <li>
             Skins are uploaded, NameMC is refreshed between each upload. The grid below shows each
-            new “head.”
+            new "head."
           </li>
-          <li>Any failed skins will be reattempted next time you click “Apply Skins.”</li>
+          <li>Any failed skins will be reattempted next time you click "Apply Skins."</li>
         </ol>
       </div>
     </div>
