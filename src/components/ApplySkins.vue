@@ -79,7 +79,7 @@ async function applySkins() {
   try {
     await tryReuploadFailedSkins()
 
-    const profileResponse = await fetch('http://mc.mtf.dev/api/minecraft/profile', {
+    const profileResponse = await fetch('https://mc.mtf.dev/api/minecraft/profile', {
       headers: { Authorization: 'Bearer ' + bearerToken.value },
     })
     if (!profileResponse.ok) {
@@ -121,7 +121,7 @@ async function applySkins() {
       let attempt = 0
       let success = false
       while (attempt < 3 && !success) {
-        const res = await fetch('http://mc.mtf.dev/api/minecraft/profile/skins', {
+        const res = await fetch('https://mc.mtf.dev/api/minecraft/profile/skins', {
           method: 'POST',
           headers: { Authorization: 'Bearer ' + bearerToken.value },
           body: formData,
@@ -206,8 +206,8 @@ async function tryReuploadFailedSkins() {
 
     let attempt = 0
     let success = false
-    while (attempt < 3 && !success) {
-      const res = await fetch('http://mc.mtf.dev/api/minecraft/profile/skins', {
+    /*while (attempt < 3 && !success) {
+      const res = await fetch('/api/minecraft/profile/skins', {
         method: 'POST',
         headers: { Authorization: 'Bearer ' + bearerToken.value },
         body: formData,
@@ -223,7 +223,7 @@ async function tryReuploadFailedSkins() {
         if (attempt < 3) await sleep(3000)
       }
     }
-
+*/
     if (!success) {
       newFailList.push(item)
     }
