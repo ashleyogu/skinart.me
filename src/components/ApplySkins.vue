@@ -79,7 +79,7 @@ async function applySkins() {
   try {
     await tryReuploadFailedSkins()
 
-    const profileResponse = await fetch('https://mc.cvyl.me/api/minecraft/profile', {
+    const profileResponse = await fetch('https://mc.mtf.dev/api/minecraft/profile', {
       headers: { Authorization: 'Bearer ' + bearerToken.value },
     })
     if (!profileResponse.ok) {
@@ -121,7 +121,7 @@ async function applySkins() {
       let attempt = 0
       let success = false
       while (attempt < 3 && !success) {
-        const res = await fetch('https://mc.cvyl.me/api/minecraft/profile/skins', {
+        const res = await fetch('https://mc.mtf.dev/api/minecraft/profile/skins', {
           method: 'POST',
           headers: { Authorization: 'Bearer ' + bearerToken.value },
           body: formData,
