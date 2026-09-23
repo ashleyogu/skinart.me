@@ -52,7 +52,7 @@ provide('setError', setError)
         </a>
         <a
           class="transition hover:text-white"
-          href="https://discord.com"
+          href="https://discord.gg/MqpQnm2k5V"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Open Discord"
