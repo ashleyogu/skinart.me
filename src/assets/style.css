@@ -1,2 +1,29 @@
 @import 'tailwindcss';
 @tailwind utilities;
+
+:root {
+	font-family: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+	color: #fff;
+	background: #090909;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	min-width: 320px;
+	min-height: 100vh;
+	margin: 0;
+	background-color: #090909;
+	background-image: linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+	background-size: 32px 32px;
+}
+
+button,
+input {
+	font: inherit;
+}

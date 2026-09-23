@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, inject } from 'vue'
+import { computed, inject, ref } from 'vue'
 import JSZip from 'jszip'
 
 const setError = inject<(msg: string) => void>('setError') ?? (() => {})
@@ -8,6 +8,15 @@ const artFile = ref<File | null>(null)
 const baseSkinFile = ref<File | null>(null)
 const artPreview = ref<string>('')
 const basePreview = ref<string>('')
+const artInput = ref<HTMLInputElement | null>(null)
+const baseInput = ref<HTMLInputElement | null>(null)
+const mode = ref<'namemc' | 'laby'>('namemc')
+
+const modeConfig = computed(() =>
+  mode.value === 'namemc'
+    ? { label: 'NameMC', width: 72, height: 24, columns: 9, rows: 3 }
+    : { label: 'Laby', width: 40, height: 32, columns: 5, rows: 4 },
+)
 
 const defaultBaseSkin = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAGUExURQAAAAAAAKVnuc8AAAACdFJOU/8A5bcwSgAAAAlwSFlzAAAOwwAADsMBx2+oZAAAABh0RVh0U29mdHdhcmUAUGFpbnQuTkVUIDUuMS4xYrVSDAAAALZlWElmSUkqAAgAAAAFABoBBQABAAAASgAAABsBBQABAAAAUgAAACgBAwABAAAAAgAAADEBAgAQAAAAWgAAAGmHBAABAAAAagAAAAAAAABgAAAAAQAAAGAAAAABAAAAUGFpbnQuTkVUIDUuMS4xAAMAAJAHAAQAAAAwMjMwAaADAAEAAAABAAAABaAEAAEAAACUAAAAAAAAAAIAAQACAAQAAABSOTgAAgAHAAQAAAAwMTAwAAAAABt005TUCIYLAAAAb0lEQVRYR+3SMQrAMAxDUef+l65iPiE0Sx06Gb2hIFFrSgzEC/VCvVAPD/QYMJv2x5AvY0N9PBpi6jBwi3sPCLGOew8IsY77Hwbyg2yEuFAf/00dBm5x7wEh1nHvASHWcf/DQH6QjRA/5Q4DZiYRD89vA2HA6LX7AAAAAElFTkSuQmCC";
 
@@ -93,8 +102,8 @@ async function generateSkins() {
   }
   try {
     const artImage = await loadImage(artFile.value)
-    if (artImage.width !== 72 || artImage.height !== 24) {
-      setError('Skin art must be 72×24 px')
+    if (artImage.width !== modeConfig.value.width || artImage.height !== modeConfig.value.height) {
+      setError(`${modeConfig.value.label} art must be ${modeConfig.value.width}×${modeConfig.value.height} px`)
       return
     }
     let baseSkinImage: HTMLImageElement
@@ -110,8 +119,8 @@ async function generateSkins() {
 
     const zip = new JSZip()
     let i = 0
-    for (let y = 2; y >= 0; y--) {
-      for (let x = 8; x >= 0; x--) {
+    for (let y = modeConfig.value.rows - 1; y >= 0; y--) {
+      for (let x = modeConfig.value.columns - 1; x >= 0; x--) {
         i++
         const canvas = document.createElement('canvas')
         canvas.width = 64
@@ -126,6 +135,21 @@ async function generateSkins() {
           canvas.toBlob((b) => resolve(b!), 'image/png'),
         )
         zip.file(`Skin-${i}.png`, blob)
+      }
+    }
+
+    // The original skin belongs at the end of the upload order.
+    if (baseSkinFile.value) {
+      const baseCanvas = document.createElement('canvas')
+      baseCanvas.width = 64
+      baseCanvas.height = 64
+      const baseContext = baseCanvas.getContext('2d')
+      if (baseContext) {
+        baseContext.drawImage(baseSkinImage, 0, 0)
+        const baseBlob: Blob = await new Promise((resolve) =>
+          baseCanvas.toBlob((b) => resolve(b!), 'image/png'),
+        )
+        zip.file(`Skin-${i + 1}.png`, baseBlob)
       }
     }
 
@@ -144,24 +168,34 @@ async function generateSkins() {
 </script>
 
 <template>
-  <div class="bg-gray-800 rounded-2xl shadow-xl p-8 w-full max-w-2xl border border-gray-700">
-    <div class="text-center mb-8">
-      <h1 class="text-3xl font-bold text-white mb-4">Minecraft Skin Art Generator</h1>
-    </div>
-    <div class="space-y-6">
+  <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
+    <section class="flex flex-col border border-white/12 bg-[#111111] p-5 shadow-2xl sm:p-8">
+      <div class="mb-8 flex flex-col gap-4 border-b border-white/10 pb-6 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p class="mb-2 text-xs uppercase tracking-[0.22em] text-white/40">01 / Build</p>
+          <h2 class="text-2xl font-semibold tracking-[-0.03em]">Process your skinart</h2>
+        </div>
+        <div class="grid grid-cols-2 border border-white/15 p-1 text-xs font-semibold uppercase tracking-[0.12em]">
+          <button class="px-3 py-2 transition" :class="mode === 'namemc' ? 'bg-white text-black' : 'text-white/50 hover:text-white'" @click="mode = 'namemc'">NameMC</button>
+          <button class="px-3 py-2 transition" :class="mode === 'laby' ? 'bg-white text-black' : 'text-white/50 hover:text-white'" @click="mode = 'laby'">Laby</button>
+        </div>
+      </div>
+      <div class="mb-7 flex items-center justify-between text-sm text-white/55">
+        <span>{{ modeConfig.label }} canvas</span>
+        <strong class="font-mono text-white">{{ modeConfig.width }} × {{ modeConfig.height }} px</strong>
+      </div>
+      <div class="flex flex-1 flex-col space-y-7">
       <div>
-        <label class="block text-sm font-medium text-gray-300 mb-2">
-          Skin Art Image (72×24px)
-        </label>
+        <label class="mb-2 block text-sm font-medium text-white">Skin art sheet</label>
         <div
-          class="relative border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors"
+          class="relative cursor-pointer border border-dashed border-white/20 p-8 text-center transition-colors hover:border-white/60"
           :class="[
-            dragOver ? 'border-purple-500 bg-purple-900/20' : 'border-gray-600 hover:border-gray-500',
+            dragOver ? 'border-white bg-white/5' : '',
           ]"
           @dragover="(e) => handleDragOver(e, 'art')"
           @dragleave="() => handleDragLeave('art')"
           @drop="(e) => handleDrop(e, 'art')"
-          @click="$refs.artInput.click()"
+          @click="artInput?.click()"
         >
           <input
             ref="artInput"
@@ -185,21 +219,21 @@ async function generateSkins() {
               />
             </svg>
             <div class="text-sm text-gray-400">
-              <span class="font-medium text-purple-400 hover:text-purple-300">Click to upload</span>
-              or drag & drop
+              <span class="font-medium text-purple-400 hover:text-purple-300">Choose a PNG</span>
+              or drag it here
             </div>
-            <p class="text-xs text-gray-500">PNG/JPG, 72×24 px</p>
+            <p class="text-xs text-gray-500">Your skinart · {{ modeConfig.width }}×{{ modeConfig.height }} px </p>
           </div>
           <div v-else class="space-y-2">
             <img
               :src="artPreview"
               alt="Art Preview"
-              class="mx-auto border border-gray-700 rounded bg-gray-900"
+              class="mx-auto border border-white/15 bg-black"
               style="image-rendering: pixelated"
             />
             <p class="text-sm text-gray-400">{{ artFile?.name }}</p>
             <button
-              class="text-xs text-pink-400 hover:text-pink-300"
+              class="text-xs text-white/50 underline hover:text-white"
               @click.stop="
                 () => {
                   artFile = null
@@ -213,20 +247,19 @@ async function generateSkins() {
         </div>
       </div>
 
-      <!-- Base Skin Upload (Optional) -->
       <div>
         <label class="block text-sm font-medium text-gray-300 mb-2">
-          Base Skin (64×64px, optional)
+          Optional final skin
         </label>
         <div
-          class="relative border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors"
+          class="relative cursor-pointer border border-dashed border-white/20 p-6 text-center transition-colors hover:border-white/60"
           :class="[
-            baseDragOver ? 'border-purple-500 bg-purple-900/20' : 'border-gray-600 hover:border-gray-500',
+            baseDragOver ? 'border-white bg-white/5' : '',
           ]"
           @dragover="(e) => handleDragOver(e, 'base')"
           @dragleave="() => handleDragLeave('base')"
           @drop="(e) => handleDrop(e, 'base')"
-          @click="$refs.baseInput.click()"
+          @click="baseInput?.click()"
         >
           <input
             ref="baseInput"
@@ -249,18 +282,18 @@ async function generateSkins() {
                 stroke-linejoin="round"
               />
             </svg>
-            <p class="text-xs text-gray-500">PNG/JPG, 64×64 px</p>
+            <p class="text-xs text-gray-500">Your Minecraft skin · 64×64 px</p>
           </div>
           <div v-else class="space-y-2">
             <img
               :src="basePreview"
               alt="Base Skin Preview"
-              class="mx-auto border border-gray-700 rounded bg-gray-900"
+              class="mx-auto border border-white/15 bg-black"
               style="image-rendering: pixelated"
             />
             <p class="text-sm text-gray-400">{{ baseSkinFile?.name }}</p>
             <button
-              class="text-xs text-pink-400 hover:text-pink-300"
+              class="text-xs text-white/50 underline hover:text-white"
               @click.stop="
                 () => {
                   baseSkinFile = null
@@ -274,22 +307,31 @@ async function generateSkins() {
         </div>
       </div>
 
+      </div>
       <button
         @click="generateSkins"
-        class="w-full bg-purple-500 text-white py-3 px-4 rounded-lg hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all transform hover:scale-[1.02] active:scale-[0.98] font-medium"
+        class="mt-3 w-full bg-white px-4 py-3 font-semibold text-black transition hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#111111]"
       >
-        Generate Skins & Download ZIP
+        Generate .zip file for {{ modeConfig.label }}
       </button>
+    </section>
 
-      <div class="mt-6 text-sm text-gray-400">
-        <h3 class="font-medium text-gray-300 mb-2">Instructions:</h3>
-        <ol class="list-decimal list-inside space-y-1">
-          <li>Upload a 72×24 skin art image.</li>
-          <li>Optionally upload a 64×64 base skin. (Default black used if omitted)</li>
-          <li>Click "Generate Skins" to download a zip of 27 Skin-X files.</li>
-          <li>Then switch over to the "Apply Skins" tab.</li>
-        </ol>
+    <aside id="guide" class="border border-white/12 bg-[#111111] p-5 sm:p-7">
+      <p class="mb-2 text-xs uppercase tracking-[0.22em] text-white/40">02 / Guide</p>
+      <h2 class="mb-3 text-2xl font-semibold tracking-[-0.03em]">How to process your skinart</h2>
+      <p class="mb-6 text-sm leading-6 text-white/50">
+
+      </p>
+      <ol class="space-y-5 text-sm leading-6 text-white/60">
+        <li><strong class="mr-2 text-white">01</strong> Select <span class="text-white">NameMC</span> or <span class="text-white">Laby</span>.</li>
+        <li><strong class="mr-2 text-white">02</strong> Create a skinart that is <span class="text-white">{{ modeConfig.width }} × {{ modeConfig.height }} px</span>.</li>
+        <li><strong class="mr-2 text-white">03</strong> Upload your skinart, then add a 64×64 Minecraft skin if you want a personal skin at the end.</li>
+        <li><strong class="mr-2 text-white">04</strong> Generate the ZIP and upload the numbered files to your profile in order.</li>
+        <li><strong class="mr-2 text-white">05</strong> Wait for each skin to appear on your <span class="text-white">{{ modeConfig.label }}</span> page.</li>
+      </ol>
+      <div class="mt-8 border-t border-white/10 pt-5 text-xs leading-5 text-white/35">
+        The optional final skin is exported after the art tiles. If you leave it out, the set simply contains the art tiles.
       </div>
-    </div>
+    </aside>
   </div>
 </template>
