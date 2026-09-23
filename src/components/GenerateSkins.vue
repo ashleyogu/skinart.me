@@ -154,11 +154,10 @@ async function generateSkins() {
 
     const uploadGuide = `HOW TO UPLOAD
 
-1. Open your ${modeConfig.value.label} profile and start uploading skins.
-2. Upload the files named Skin-1.png through Skin-${i}.png in numbered order.
-3. Wait for each upload to finish before uploading the next file.
-4. If you included a final skin, it replaces Skin-${i}.png and is the last file to upload.
-`
+  1. Open your ${modeConfig.value.label} profile and start uploading skins.
+  2. Upload the files named Skin-1.png through Skin-${i}.png in numbered order.
+  3. Wait for each upload to finish and register by ${modeConfig.value.label} before uploading the next file.
+  `
     zip.file('HOW-TO-UPLOAD.txt', uploadGuide)
 
     const content = await zip.generateAsync({ type: 'blob' })
