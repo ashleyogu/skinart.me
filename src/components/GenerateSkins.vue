@@ -156,7 +156,7 @@ async function generateSkins() {
 
   1. Open your ${modeConfig.value.label} profile and start uploading skins.
   2. Upload the files named Skin-1.png through Skin-${i}.png in numbered order.
-  3. Wait for each upload to finish and register by ${modeConfig.value.label} before uploading the next file.
+  3. Wait for each upload to finish and noticed by ${modeConfig.value.label} before uploading the next file.
   `
     zip.file('HOW-TO-UPLOAD.txt', uploadGuide)
 
