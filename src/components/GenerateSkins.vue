@@ -138,7 +138,6 @@ async function generateSkins() {
       }
     }
 
-    // The original skin belongs at the end of the upload order.
     if (baseSkinFile.value) {
       const baseCanvas = document.createElement('canvas')
       baseCanvas.width = 64
@@ -149,9 +148,18 @@ async function generateSkins() {
         const baseBlob: Blob = await new Promise((resolve) =>
           baseCanvas.toBlob((b) => resolve(b!), 'image/png'),
         )
-        zip.file(`Skin-${i + 1}.png`, baseBlob)
+        zip.file(`Skin-${i}.png`, baseBlob)
       }
     }
+
+    const uploadGuide = `HOW TO UPLOAD
+
+1. Open your ${modeConfig.value.label} profile and start uploading skins.
+2. Upload the files named Skin-1.png through Skin-${i}.png in numbered order.
+3. Wait for each upload to finish before uploading the next file.
+4. If you included a final skin, it replaces Skin-${i}.png and is the last file to upload.
+`
+    zip.file('HOW-TO-UPLOAD.txt', uploadGuide)
 
     const content = await zip.generateAsync({ type: 'blob' })
     const url = URL.createObjectURL(content)
@@ -312,7 +320,7 @@ async function generateSkins() {
         @click="generateSkins"
         class="mt-3 w-full bg-white px-4 py-3 font-semibold text-black transition hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#111111]"
       >
-        Generate .zip file for {{ modeConfig.label }}
+        Generategit push -u origin main .zip file for {{ modeConfig.label }}
       </button>
     </section>
 
