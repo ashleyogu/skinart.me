@@ -177,9 +177,9 @@ async function generateSkins() {
 </script>
 
 <template>
-  <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
-    <section class="flex flex-col border border-white/12 bg-[#111111] p-5 shadow-2xl sm:p-8">
-      <div class="mb-8 flex flex-col gap-4 border-b border-white/10 pb-6 sm:flex-row sm:items-end sm:justify-between">
+  <div class="mx-auto grid max-w-[980px] gap-6 lg:grid-cols-[minmax(0,1fr)_265px]">
+    <section class="flex flex-col border border-white/12 bg-[#111111] p-4 shadow-2xl sm:p-6">
+      <div class="mb-6 flex flex-col gap-4 border-b border-white/10 pb-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p class="mb-2 text-xs uppercase tracking-[0.22em] text-white/40">01 / Build</p>
           <h2 class="text-2xl font-semibold tracking-[-0.03em]">Process your skinart</h2>
@@ -189,11 +189,11 @@ async function generateSkins() {
           <button class="px-3 py-2 transition" :class="mode === 'laby' ? 'bg-white text-black' : 'text-white/50 hover:text-white'" @click="mode = 'laby'">Laby</button>
         </div>
       </div>
-      <div class="mb-7 flex items-center justify-between text-sm text-white/55">
+      <div class="mb-6 flex items-center justify-between text-sm text-white/55">
         <span>{{ modeConfig.label }} canvas</span>
         <strong class="font-mono text-white">{{ modeConfig.width }} × {{ modeConfig.height }} px</strong>
       </div>
-      <div class="flex flex-1 flex-col space-y-7">
+      <div class="flex flex-1 flex-col space-y-6">
       <div>
         <label class="mb-2 block text-sm font-medium text-white">Skin art sheet</label>
         <div
@@ -325,13 +325,13 @@ async function generateSkins() {
       </button>
     </section>
 
-    <aside id="guide" class="border border-white/12 bg-[#111111] p-5 sm:p-7">
+    <aside id="guide" class="border border-white/12 bg-[#111111] p-4 sm:p-5">
       <p class="mb-2 text-xs uppercase tracking-[0.22em] text-white/40">02 / Guide</p>
       <h2 class="mb-3 text-2xl font-semibold tracking-[-0.03em]">How to process your skinart</h2>
       <p class="mb-6 text-sm leading-6 text-white/50">
 
       </p>
-      <ol class="space-y-5 text-sm leading-6 text-white/60">
+      <ol class="space-y-4 text-sm leading-6 text-white/60">
         <li><strong class="mr-2 text-white">01</strong> Select <span class="text-white">NameMC</span> or <span class="text-white">Laby</span>.</li>
         <li><strong class="mr-2 text-white">02</strong> Create a skinart that is <span class="text-white">{{ modeConfig.width }} × {{ modeConfig.height }} px</span>.</li>
         <li><strong class="mr-2 text-white">03</strong> Upload your skinart, then add a 64×64 Minecraft skin if you want a personal skin at the end.</li>
