@@ -319,7 +319,7 @@ async function generateSkins() {
         @click="generateSkins"
         class="mt-3 w-full bg-white px-4 py-3 font-semibold text-black transition hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#111111]"
       >
-        Generategit push -u origin main .zip file for {{ modeConfig.label }}
+        Generate .zip file for {{ modeConfig.label }}
       </button>
     </section>
 

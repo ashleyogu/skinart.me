@@ -66,6 +66,12 @@ provide('setError', setError)
     </header>
 
     <main class="mx-auto w-full max-w-5xl">
+      <div class="mb-8 text-center">
+        <p class="text-xs uppercase tracking-[0.28em] text-white/45">skinart generator</p>
+        <h1 class="mt-3 text-3xl font-black tracking-[-0.05em] text-white sm:text-4xl">
+          Create custom NameMC and Laby skin sets
+        </h1>
+      </div>
       <GenerateSkins />
     </main>
   </div>
