@@ -34,14 +34,14 @@ provide('setError', setError)
 
     <div class="mx-auto w-full max-w-[1080px] -translate-y-2 lg:-translate-y-4">
       <header class="mb-6 flex w-full items-center justify-between gap-2 px-3 sm:px-5">
-        <div class="flex min-w-0 items-center gap-2 translate-x-1">
-          <img src="/favicon.png" alt="" class="h-4 w-4 shrink-0 object-contain" />
-          <span class="truncate text-[11px] font-semibold tracking-[0.12em] text-white">skinart.me</span>
+        <div class="flex min-w-0 items-center gap-2.5 translate-x-1">
+          <img src="/favicon.png" alt="" class="h-5 w-5 shrink-0 object-contain" />
+          <span class="truncate text-[12px] font-semibold tracking-[0.12em] text-white sm:text-[13px]">skinart.me</span>
         </div>
 
-        <nav class="flex shrink-0 translate-x-[-2px] items-center gap-2 text-white/45">
+        <nav class="flex shrink-0 translate-x-[-2px] items-center gap-2.5 text-white/45">
           <a
-            class="flex h-6 w-6 items-center justify-center rounded-sm transition hover:text-white"
+            class="flex h-7 w-7 items-center justify-center rounded-sm transition hover:text-white"
             href="https://github.com/ashleyogu/skinart.me"
             target="_blank"
             rel="noopener noreferrer"
@@ -53,14 +53,14 @@ provide('setError', setError)
             </svg>
           </a>
           <a
-            class="flex h-6 w-6 items-center justify-center rounded-sm transition hover:text-white"
+            class="flex h-7 w-7 items-center justify-center rounded-sm transition hover:text-white"
             href="https://discord.gg/MqpQnm2k5V"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Open Discord"
             title="Discord"
           >
-            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M19.54 5.18A16.9 16.9 0 0 0 15.4 3.9l-.5 1.02a15.4 15.4 0 0 0-5.8 0L8.6 3.9a16.95 16.95 0 0 0-4.15 1.29C1.82 9.08 1.1 12.88 1.46 16.63a16.75 16.75 0 0 0 5.1 2.58l1.23-1.7c-.67-.25-1.3-.56-1.9-.92l.46-.35c3.66 1.7 7.63 1.7 11.24 0l.47.35c-.6.36-1.24.67-1.91.92l1.23 1.7a16.8 16.8 0 0 0 5.1-2.58c.43-4.35-.73-8.11-2.94-11.45ZM8.73 15.02c-1.1 0-2-.99-2-2.2s.88-2.2 2-2.2c1.12 0 2.02.99 2 2.2 0 1.21-.88 2.2-2 2.2Zm6.54 0c-1.1 0-2-.99-2-2.2s.88-2.2 2-2.2c1.12 0 2.02.99 2 2.2 0 1.21-.88 2.2-2 2.2Z" />
             </svg>
           </a>
