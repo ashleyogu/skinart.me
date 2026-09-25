@@ -177,7 +177,7 @@ async function generateSkins() {
 </script>
 
 <template>
-  <div class="mx-auto grid max-w-[980px] gap-6 lg:grid-cols-[minmax(0,1fr)_265px]">
+  <div class="grid w-full gap-6 lg:grid-cols-[minmax(0,1fr)_265px]">
     <section class="flex flex-col border border-white/12 bg-[#111111] p-4 shadow-2xl sm:p-6">
       <div class="mb-6 flex flex-col gap-4 border-b border-white/10 pb-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
@@ -215,7 +215,7 @@ async function generateSkins() {
           />
           <div v-if="!artPreview" class="space-y-2">
             <svg
-              class="mx-auto h-12 w-12 text-gray-500"
+              class="mx-auto h-8 w-8 text-gray-500"
               stroke="currentColor"
               fill="none"
               viewBox="0 0 48 48"
