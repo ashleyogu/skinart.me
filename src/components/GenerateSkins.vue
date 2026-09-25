@@ -2,6 +2,8 @@
 import { computed, inject, ref } from 'vue'
 import JSZip from 'jszip'
 
+//test
+
 const setError = inject<(msg: string) => void>('setError') ?? (() => {})
 
 const artFile = ref<File | null>(null)
